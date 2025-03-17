@@ -3,6 +3,7 @@ package com.culinario.domain.ingredient.service.impl;
 import com.culinario.application.commons.exception.NotFoundException;
 import com.culinario.application.ingredient.request.IngredientRequest;
 import com.culinario.application.ingredient.response.IngredientResponse;
+import com.culinario.domain.ingredient.mapper.IngredientMapper;
 import com.culinario.domain.ingredient.service.IIngredientService;
 import com.culinario.infrastructure.entity.Ingredient;
 import com.culinario.infrastructure.repository.IngredientRepository;
@@ -10,38 +11,30 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 public class IngredientServiceImpl implements IIngredientService {
 
     private final IngredientRepository ingredientRepository;
+    private final IngredientMapper ingredientMapper;
 
     public IngredientServiceImpl(
-            IngredientRepository ingredientRepository
+            IngredientRepository ingredientRepository,
+            IngredientMapper ingredientMapper
     ) {
         this.ingredientRepository = ingredientRepository;
+        this.ingredientMapper = ingredientMapper;
     }
 
     @Override
     public Page<IngredientResponse> getAllPaged(Pageable pageable) {
 
-        return ingredientRepository.findAll(pageable).map(ingredient -> IngredientResponse.builder()
-                .id(ingredient.getId())
-                .name(ingredient.getName())
-                .type(ingredient.getType())
-                .build()
-        );
+        return ingredientRepository.findAll(pageable).map(ingredientMapper::entityToResponse);
     }
 
     @Override
     public IngredientResponse getById(Long id) {
         Ingredient ingredient = findById(id);
-        return IngredientResponse.builder()
-                .id(ingredient.getId())
-                .name(ingredient.getName())
-                .type(ingredient.getType())
-                .build();
+        return ingredientMapper.entityToResponse(ingredient);
     }
 
     @Override
