@@ -38,17 +38,17 @@ public class IngredientServiceImpl implements IIngredientService {
     }
 
     @Override
-    public Long post(IngredientRequest data) {
-        Ingredient newIngredient = Ingredient.builder().name(data.getName()).type(data.getType()).build();
+    public Long post(IngredientRequest request) {
+        Ingredient newIngredient = ingredientMapper.requestToEntity(request);
         Ingredient savedIngredient = ingredientRepository.save(newIngredient);
         return savedIngredient.getId();
     }
 
     @Override
-    public void patch(Long id, IngredientRequest data) {
+    public void patch(Long id, IngredientRequest request) {
         Ingredient ingredient = findById(id);
-        ingredient.setName(data.getName());
-        ingredient.setType(data.getType());
+        ingredient.setName(request.getName());
+        ingredient.setType(request.getType());
     }
 
     @Override

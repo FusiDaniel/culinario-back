@@ -8,18 +8,15 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @Setter
-@Builder
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -34,8 +31,7 @@ public class Ingredient extends BaseEntity<Long> {
     private String type;
 
     @OneToMany(mappedBy = "ingredient")
-    @Builder.Default
-    private List<RecipeIngredient> recipeIngredients = new ArrayList<>();
+    private List<RecipeIngredient> recipeIngredients;
 
     @ManyToMany
     @JoinTable(
@@ -44,11 +40,9 @@ public class Ingredient extends BaseEntity<Long> {
             inverseJoinColumns = @JoinColumn(name = "dietary_restriction_id")
     )
 
-    @Builder.Default
-    private List<DietaryRestriction> dietaryRestrictions = new ArrayList<>();
+    private List<DietaryRestriction> dietaryRestrictions;
 
     @ManyToMany(mappedBy = "homeIngredients")
-    @Builder.Default
-    private List<User> users = new ArrayList<>();
+    private List<User> users;
 
 }
