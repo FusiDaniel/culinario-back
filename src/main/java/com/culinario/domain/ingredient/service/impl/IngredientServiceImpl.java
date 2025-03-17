@@ -36,7 +36,7 @@ public class IngredientServiceImpl implements IIngredientService {
 
     @Override
     public IngredientResponse getById(Long id) {
-        Ingredient ingredient = ingredientRepository.findById(id).orElseThrow(NotFoundException::new);
+        Ingredient ingredient = findById(id);
         return IngredientResponse.builder()
                 .id(ingredient.getId())
                 .name(ingredient.getName())
@@ -53,15 +53,19 @@ public class IngredientServiceImpl implements IIngredientService {
 
     @Override
     public void patch(Long id, IngredientRequest data) {
-        Ingredient ingredient = ingredientRepository.findById(id).orElseThrow(NotFoundException::new);
+        Ingredient ingredient = findById(id);
         ingredient.setName(data.getName());
         ingredient.setType(data.getType());
     }
 
     @Override
     public void delete(Long id) {
-        Ingredient ingredient = ingredientRepository.findById(id).orElseThrow(NotFoundException::new);
+        Ingredient ingredient = findById(id);
         ingredientRepository.delete(ingredient);
+    }
+
+    private Ingredient findById(Long id) {
+        return ingredientRepository.findById(id).orElseThrow(NotFoundException::new);
     }
 
 }
