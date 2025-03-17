@@ -11,6 +11,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Field;
+
 @Service
 public class IngredientServiceImpl implements IIngredientService {
 
@@ -46,9 +48,19 @@ public class IngredientServiceImpl implements IIngredientService {
 
     @Override
     public void patch(Long id, IngredientRequest request) {
-        Ingredient ingredient = findById(id);
-        ingredient.setName(request.getName());
-        ingredient.setType(request.getType());
+        Ingredient existingIngredient = findById(id);
+        Ingredient update = ingredientMapper.requestToEntity(request);
+
+        for (Field field : update.getClass().getDeclaredFields()) {
+            field.setAccessible(true);
+            try {
+                if (field.get(update) != null && !field.get(update).equals(field.get(existingIngredient))) {
+                    field.set(existingIngredient, field.get(update));
+                }
+            } catch (Exception e) {
+                throw new RuntimeException(e.getMessage());
+            }
+        }
     }
 
     @Override

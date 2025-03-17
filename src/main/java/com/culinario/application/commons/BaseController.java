@@ -48,7 +48,7 @@ public abstract class BaseController<ID_TYPE, REQUEST, RESPONSE> {
     @PatchMapping("/{id}")
     @ResponseStatus(NO_CONTENT)
     @Transactional
-    protected void patch(@PathVariable ID_TYPE id, @Valid @RequestBody REQUEST request) {
+    protected void patch(@PathVariable ID_TYPE id, @RequestBody REQUEST request) {
         service.patch(id, request);
     }
 
