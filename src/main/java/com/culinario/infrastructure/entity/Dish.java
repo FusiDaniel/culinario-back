@@ -26,7 +26,7 @@ public class Dish extends BaseEntity<Long>{
     @Column(nullable = false)
     private String name;
 
-    @Column(length = 2000)
+    @Column(length = 2000, nullable = false)
     private String instructions;
 
     @Column(nullable = false)
@@ -48,7 +48,7 @@ public class Dish extends BaseEntity<Long>{
     @OneToMany(mappedBy = "dish")
     private List<RecipeIngredient> recipeIngredients;
 
-    @ManyToMany(mappedBy = "dishes")
+    @ManyToMany(mappedBy = "savedDishes")
     private List<User> users;
 
 }

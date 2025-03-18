@@ -21,10 +21,10 @@ import java.util.List;
 @Table(name = "tb_user")
 public class User extends BaseEntity<Long> {
 
-    @Column
+    @Column(nullable = false)
     private String email;
 
-    @Column
+    @Column(nullable = false)
     private String password;
 
     @Column
@@ -36,7 +36,7 @@ public class User extends BaseEntity<Long> {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "dish_id")
     )
-    private List<Dish> dishes;
+    private List<Dish> savedDishes;
 
     @ManyToMany
     @JoinTable(
