@@ -39,6 +39,7 @@ public class Ingredient extends BaseEntity<Long> {
             joinColumns = @JoinColumn(name = "ingredient_id"),
             inverseJoinColumns = @JoinColumn(name = "dietary_restriction_id")
     )
+
     private List<DietaryRestriction> dietaryRestrictions;
 
     @ManyToMany(mappedBy = "homeIngredients")
