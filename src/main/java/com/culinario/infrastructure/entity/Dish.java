@@ -1,19 +1,25 @@
 package com.culinario.infrastructure.entity;
 
+import com.culinario.infrastructure.converter.DishCategoryListConverter;
 import com.culinario.infrastructure.enums.DishCategory;
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import static jakarta.persistence.CascadeType.ALL;
+import static jakarta.persistence.FetchType.EAGER;
 
 @Getter
 @Setter
@@ -21,7 +27,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "tb_dish")
-public class Dish extends BaseEntity<Long>{
+public class Dish extends BaseEntity<Long> {
 
     @Column(nullable = false)
     private String name;
@@ -29,12 +35,13 @@ public class Dish extends BaseEntity<Long>{
     @Column(length = 2000, nullable = false)
     private String instructions;
 
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private DishCategory categories;
+    @Convert(converter = DishCategoryListConverter.class)
+    @Column(length = 1000)
+    private List<DishCategory> categories;
 
-    @Column
-    private String nutritionFacts;
+    @OneToOne(cascade = ALL)
+    @JoinColumn(name = "nutrition_facts_id")
+    private NutritionFacts nutritionFacts;
 
     @Column(nullable = false)
     private Integer cookTime;
@@ -45,8 +52,8 @@ public class Dish extends BaseEntity<Long>{
     @Column
     private String imageFile;
 
-    @OneToMany(mappedBy = "dish")
-    private List<RecipeIngredient> recipeIngredients;
+    @OneToMany(mappedBy = "dish", cascade = ALL, fetch = EAGER, orphanRemoval = true)
+    private List<RecipeIngredient> recipeIngredients = new ArrayList<>();
 
     @ManyToMany(mappedBy = "savedDishes")
     private List<User> users;
