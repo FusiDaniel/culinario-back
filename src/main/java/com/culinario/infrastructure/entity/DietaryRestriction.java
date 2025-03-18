@@ -19,7 +19,7 @@ import java.util.List;
 @Table(name = "tb_dietary_restriction")
 public class DietaryRestriction extends BaseEntity<Long> {
 
-    @Column
+    @Column(nullable = false)
     private String name;
 
     @ManyToMany(mappedBy = "dietaryRestrictions")

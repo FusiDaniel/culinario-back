@@ -21,7 +21,7 @@ import java.util.List;
 @Table(name = "tb_recipe_ingredient")
 public class RecipeIngredient extends BaseEntity<Long> {
 
-    @Column
+    @Column(nullable = false)
     Integer amount;
 
     @ManyToOne(optional = false)

@@ -1,6 +1,8 @@
 package com.culinario.infrastructure.entity;
 
+import com.culinario.infrastructure.converter.StringListConverter;
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
@@ -21,13 +23,14 @@ import java.util.List;
 @Table(name = "tb_user")
 public class User extends BaseEntity<Long> {
 
-    @Column
+    @Column(nullable = false)
     private String email;
 
-    @Column
+    @Column(nullable = false)
     private String password;
 
-    @Column
+    @Convert(converter = StringListConverter.class)
+    @Column(nullable = false, length = 1000)
     private List<String> preferredUnits;
 
     @ManyToMany
@@ -36,7 +39,7 @@ public class User extends BaseEntity<Long> {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "dish_id")
     )
-    private List<Dish> dishes;
+    private List<Dish> savedDishes;
 
     @ManyToMany
     @JoinTable(

@@ -24,10 +24,10 @@ import java.util.List;
 @Table(name = "tb_ingredient")
 public class Ingredient extends BaseEntity<Long> {
 
-    @Column
+    @Column(nullable = false)
     private String name;
 
-    @Column
+    @Column(nullable = false)
     private String type;
 
     @OneToMany(mappedBy = "ingredient")
