@@ -1,6 +1,8 @@
 package com.culinario.infrastructure.entity;
 
+import com.culinario.infrastructure.converter.StringListConverter;
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
@@ -27,7 +29,8 @@ public class User extends BaseEntity<Long> {
     @Column(nullable = false)
     private String password;
 
-    @Column
+    @Convert(converter = StringListConverter.class)
+    @Column(nullable = false, length = 1000)
     private List<String> preferredUnits;
 
     @ManyToMany
