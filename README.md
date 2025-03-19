@@ -20,3 +20,4 @@ FORMAT_SQL;
 - User endpoints
 - Dietary restrictions
 - Image upload
+- DishItem
