@@ -29,7 +29,6 @@ public class IngredientServiceImpl implements IIngredientService {
 
     @Override
     public Page<IngredientResponse> getAllPaged(Pageable pageable) {
-
         return ingredientRepository.findAll(pageable).map(ingredientMapper::entityToResponse);
     }
 

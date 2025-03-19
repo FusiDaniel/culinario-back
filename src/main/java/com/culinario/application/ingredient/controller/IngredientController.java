@@ -1,4 +1,4 @@
-package com.culinario.application.ingredient;
+package com.culinario.application.ingredient.controller;
 
 import com.culinario.application.commons.BaseController;
 import com.culinario.application.ingredient.request.IngredientRequest;

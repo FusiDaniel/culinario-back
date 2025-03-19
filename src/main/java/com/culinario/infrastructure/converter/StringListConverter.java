@@ -20,7 +20,7 @@ public class StringListConverter implements AttributeConverter<List<String>, Str
     }
 
     @Override
-    public List<String> convertToEntityAttribute(String string) {
-        return nonNull(string) ? Arrays.asList(string.split(DELIMITER)) : Collections.emptyList();
+    public List<String> convertToEntityAttribute(String s) {
+        return nonNull(s) ? Arrays.asList(s.split(DELIMITER)) : Collections.emptyList();
     }
 }
