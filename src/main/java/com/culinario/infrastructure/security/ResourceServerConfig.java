@@ -35,6 +35,7 @@ public class ResourceServerConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http.authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/v3/api-docs/**", "/swagger-ui/**").permitAll()
                         .requestMatchers("/user/me/**").hasRole(USER)
                         .requestMatchers(HttpMethod.GET, "/dishes/**").hasRole(USER)
                         .requestMatchers("/dishes/**").hasRole(ADMIN)
