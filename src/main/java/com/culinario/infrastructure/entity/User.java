@@ -50,7 +50,7 @@ public class User extends BaseEntity<Long> implements UserDetails {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "dish_id")
     )
-    private List<Dish> savedDishes;
+    private Set<Dish> savedDishes = new HashSet<>();
 
     @ManyToMany
     @JoinTable(
@@ -58,7 +58,7 @@ public class User extends BaseEntity<Long> implements UserDetails {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "dietary_restriction_id")
     )
-    private List<DietaryRestriction> dietaryRestrictions;
+    private Set<DietaryRestriction> dietaryRestrictions = new HashSet<>();
 
     @ManyToMany
     @JoinTable(
@@ -66,7 +66,7 @@ public class User extends BaseEntity<Long> implements UserDetails {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "ingredient_id")
     )
-    private List<Ingredient> homeIngredients;
+    private Set<Ingredient> homeIngredients = new HashSet<>();
 
     @ManyToMany
     @JoinTable(
@@ -74,7 +74,7 @@ public class User extends BaseEntity<Long> implements UserDetails {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "recipe_ingredient_id")
     )
-    private List<RecipeIngredient> groceriesList;
+    private Set<RecipeIngredient> groceriesList = new HashSet<>();
 
     @ManyToMany(fetch = EAGER, cascade = REMOVE)
     @JoinTable(
