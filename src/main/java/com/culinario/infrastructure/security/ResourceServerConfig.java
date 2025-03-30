@@ -36,6 +36,7 @@ public class ResourceServerConfig {
 
         http.authorizeHttpRequests(auth -> auth
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/users").permitAll()
                         .requestMatchers("/users/me/**").authenticated()
                         .requestMatchers("/users/**").hasRole(ADMIN)
                         .requestMatchers(HttpMethod.GET, "/dishes/**").hasRole(USER)
