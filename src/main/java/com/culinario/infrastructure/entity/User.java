@@ -8,6 +8,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -31,7 +32,12 @@ import static jakarta.persistence.FetchType.EAGER;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "tb_user")
+@Table(
+        name = "tb_user",
+        uniqueConstraints = {
+                @UniqueConstraint(name = "UQ_TB_USER_EMAIL", columnNames = { "email" })
+        }
+)
 public class User extends BaseEntity<Long> implements UserDetails {
 
     @Column(nullable = false)
