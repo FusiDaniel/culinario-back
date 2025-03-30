@@ -9,7 +9,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -23,9 +24,9 @@ public class DietaryRestriction extends BaseEntity<Long> {
     private String name;
 
     @ManyToMany(mappedBy = "dietaryRestrictions")
-    private List<User> users;
+    private Set<User> users = new HashSet<>();
 
     @ManyToMany(mappedBy = "dietaryRestrictions")
-    private List<Ingredient> ingredients;
+    private Set<Ingredient> ingredients = new HashSet<>();
 
 }

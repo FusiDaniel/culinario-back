@@ -12,10 +12,20 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByEmail(String email);
 
     @Query("SELECT u FROM User u " +
-           "LEFT JOIN FETCH u.savedDishes " +
-           "LEFT JOIN FETCH u.dietaryRestrictions " +
-           "LEFT JOIN FETCH u.homeIngredients " +
-           "LEFT JOIN FETCH u.groceriesList " +
-           "WHERE u.email = :email")
+            "LEFT JOIN FETCH u.savedDishes sd " +
+            "LEFT JOIN FETCH sd.recipeIngredients " +
+            "LEFT JOIN FETCH u.dietaryRestrictions " +
+            "LEFT JOIN FETCH u.homeIngredients " +
+            "LEFT JOIN FETCH u.groceriesList " +
+            "WHERE u.email = :email")
     Optional<User> findByEmailWithCollections(@Param("email") String email);
+
+    @Query("SELECT u FROM User u " +
+            "LEFT JOIN FETCH u.savedDishes sd " +
+            "LEFT JOIN FETCH sd.recipeIngredients " +
+            "LEFT JOIN FETCH u.dietaryRestrictions " +
+            "LEFT JOIN FETCH u.homeIngredients " +
+            "LEFT JOIN FETCH u.groceriesList " +
+            "WHERE u.id = :id")
+    Optional<User> findByIdWithCollections(@Param("id") Long id);
 }

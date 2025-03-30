@@ -1,8 +1,8 @@
 INSERT INTO tb_role (authority) VALUES ('ROLE_ADMIN');
 INSERT INTO tb_role (authority) VALUES ('ROLE_USER');
 
-INSERT INTO tb_user (email, password, preferred_units) VALUES ('user1@gmail.com', '$2a$10$mHu4T.xwlWny.rU3JcqZo.B2L/T/l35q/GUnqLircqDeKCWeh3d/K', 'Kg, L, Hz, N');
-INSERT INTO tb_user (email, password, preferred_units) VALUES ('user2@gmail.com', '$2a$10$mHu4T.xwlWny.rU3JcqZo.B2L/T/l35q/GUnqLircqDeKCWeh3d/K', 'Kg, m, L, W');
+INSERT INTO tb_user (email, password, preferred_units) VALUES ('user1@gmail.com', '$2a$10$mHu4T.xwlWny.rU3JcqZo.B2L/T/l35q/GUnqLircqDeKCWeh3d/K', 'Kg,L,Hz,N');
+INSERT INTO tb_user (email, password, preferred_units) VALUES ('user2@gmail.com', '$2a$10$mHu4T.xwlWny.rU3JcqZo.B2L/T/l35q/GUnqLircqDeKCWeh3d/K', 'Kg,m,L,W');
 
 
 INSERT INTO tb_user_role (user_id, role_id) VALUES (1, 1);
