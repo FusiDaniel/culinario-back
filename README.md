@@ -3,7 +3,6 @@
 - Handle exceptions
 - Duplicate email post
 - Patch utils
-- User endpoints
 - Dietary restrictions
 - Image upload
 - DishItem
