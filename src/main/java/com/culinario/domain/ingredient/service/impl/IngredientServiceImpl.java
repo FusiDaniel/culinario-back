@@ -68,7 +68,8 @@ public class IngredientServiceImpl implements IIngredientService {
         ingredientRepository.delete(ingredient);
     }
 
-    private Ingredient findById(Long id) {
+    @Override
+    public Ingredient findById(Long id) {
         return ingredientRepository.findById(id).orElseThrow(NotFoundException::new);
     }
 

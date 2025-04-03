@@ -111,7 +111,8 @@ public class DishServiceImpl implements IDishService {
         dishRepository.delete(dish);
     }
 
-    private Dish findById(Long id) {
+    @Override
+    public Dish findById(Long id) {
         return dishRepository.findById(id).orElseThrow(NotFoundException::new);
     }
 
