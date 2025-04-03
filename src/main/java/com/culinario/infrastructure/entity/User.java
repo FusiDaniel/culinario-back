@@ -82,7 +82,7 @@ public class User extends BaseEntity<Long> implements UserDetails {
     )
     private Set<RecipeIngredient> groceriesList = new HashSet<>();
 
-    @ManyToMany(fetch = EAGER, cascade = REMOVE)
+    @ManyToMany(fetch = EAGER)
     @JoinTable(
             name = "tb_user_role",
             joinColumns = @JoinColumn(name = "user_id"),
