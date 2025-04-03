@@ -12,7 +12,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -35,6 +36,6 @@ public class RecipeIngredient extends BaseEntity<Long> {
     private Dish dish;
 
     @ManyToMany(mappedBy = "groceriesList")
-    private List<User> users;
+    private Set<User> users = new HashSet<>();
 
 }

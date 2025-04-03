@@ -14,8 +14,4 @@ public interface DishMapper extends BaseMapper<Dish, DishRequest, DishResponse> 
     @Mapping(source = "dishCategories", target = "categories")
     Dish requestToEntity(DishRequest request);
 
-    @Override
-    @Mapping(source = "recipeIngredients", target = "ingredients")
-    DishResponse entityToResponse(Dish dish);
-
 }

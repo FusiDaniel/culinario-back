@@ -18,7 +18,7 @@ public class DishResponse {
     private Long id;
     private String name;
     private String instructions;
-    private List<RecipeIngredientResponse> ingredients;
+    private List<RecipeIngredientResponse> recipeIngredients;
     private NutritionFactsResponse nutritionFacts;
     private List<DishCategory> categories;
     private Integer cookTime;

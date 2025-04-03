@@ -13,7 +13,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -31,7 +32,7 @@ public class Ingredient extends BaseEntity<Long> {
     private String type;
 
     @OneToMany(mappedBy = "ingredient")
-    private List<RecipeIngredient> recipeIngredients;
+    private Set<RecipeIngredient> recipeIngredients = new HashSet<>();
 
     @ManyToMany
     @JoinTable(
@@ -39,10 +40,9 @@ public class Ingredient extends BaseEntity<Long> {
             joinColumns = @JoinColumn(name = "ingredient_id"),
             inverseJoinColumns = @JoinColumn(name = "dietary_restriction_id")
     )
-
-    private List<DietaryRestriction> dietaryRestrictions;
+    private Set<DietaryRestriction> dietaryRestrictions = new HashSet<>();
 
     @ManyToMany(mappedBy = "homeIngredients")
-    private List<User> users;
+    private Set<User> users = new HashSet<>();
 
 }

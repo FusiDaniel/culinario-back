@@ -15,8 +15,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static jakarta.persistence.CascadeType.ALL;
 import static jakarta.persistence.FetchType.EAGER;
@@ -53,7 +54,7 @@ public class Dish extends BaseEntity<Long> {
     private String imageFile;
 
     @OneToMany(mappedBy = "dish", cascade = ALL, fetch = EAGER, orphanRemoval = true)
-    private List<RecipeIngredient> recipeIngredients = new ArrayList<>();
+    private Set<RecipeIngredient> recipeIngredients = new HashSet<>();
 
     @ManyToMany(mappedBy = "savedDishes")
     private List<User> users;

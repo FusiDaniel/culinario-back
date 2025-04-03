@@ -8,6 +8,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -31,7 +32,12 @@ import static jakarta.persistence.FetchType.EAGER;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "tb_user")
+@Table(
+        name = "tb_user",
+        uniqueConstraints = {
+                @UniqueConstraint(name = "UQ_TB_USER_EMAIL", columnNames = { "email" })
+        }
+)
 public class User extends BaseEntity<Long> implements UserDetails {
 
     @Column(nullable = false)
@@ -50,7 +56,7 @@ public class User extends BaseEntity<Long> implements UserDetails {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "dish_id")
     )
-    private List<Dish> savedDishes;
+    private Set<Dish> savedDishes = new HashSet<>();
 
     @ManyToMany
     @JoinTable(
@@ -58,7 +64,7 @@ public class User extends BaseEntity<Long> implements UserDetails {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "dietary_restriction_id")
     )
-    private List<DietaryRestriction> dietaryRestrictions;
+    private Set<DietaryRestriction> dietaryRestrictions = new HashSet<>();
 
     @ManyToMany
     @JoinTable(
@@ -66,7 +72,7 @@ public class User extends BaseEntity<Long> implements UserDetails {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "ingredient_id")
     )
-    private List<Ingredient> homeIngredients;
+    private Set<Ingredient> homeIngredients = new HashSet<>();
 
     @ManyToMany
     @JoinTable(
@@ -74,9 +80,9 @@ public class User extends BaseEntity<Long> implements UserDetails {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "recipe_ingredient_id")
     )
-    private List<RecipeIngredient> groceriesList;
+    private Set<RecipeIngredient> groceriesList = new HashSet<>();
 
-    @ManyToMany(fetch = EAGER, cascade = REMOVE)
+    @ManyToMany(fetch = EAGER)
     @JoinTable(
             name = "tb_user_role",
             joinColumns = @JoinColumn(name = "user_id"),
