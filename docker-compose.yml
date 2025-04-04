@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      args:
+        JKS_FILE_SOURCE: ${JKS_FILE_SOURCE}
+        JKS_FILE_DESTINATION: ${JKS_FILE_DESTINATION}
+    container_name: culinario_app
+    ports:
+      - "8080:8080"
+    environment:
+      APP_PROFILE: ${APP_PROFILE}
+      RDS_DBNAME: ${RDS_DBNAME}
+      RDS_DBSCHEMA: ${RDS_DBSCHEMA}
+      RDS_ENDPOINT: db:5432
+      RDS_PASSWORD: ${RDS_PASSWORD}
+      RDS_USERNAME: ${RDS_USERNAME}
+      DDL_GENERATE: true
+      DDL_AUTO: update
+      CLIENT_ID: ${CLIENT_ID}
+      CLIENT_SECRET: ${CLIENT_SECRET}
+      JKS_ALIAS: ${JKS_ALIAS}
+      JKS_KEYPASS: ${JKS_KEYPASS}
+      JKS_STOREPASS: ${JKS_STOREPASS}
+      JKS_PATH: ${JKS_PATH}
+      REDIRECT_URL: ${REDIRECT_URL}
+    depends_on:
+      - db
+
+  db:
+    image: postgres:latest
+    container_name: postgres_culinario
+    restart: always
+    environment:
+      POSTGRES_USER: ${RDS_USERNAME}
+      POSTGRES_PASSWORD: ${RDS_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+  db_data:
