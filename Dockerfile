@@ -5,7 +5,6 @@ ARG JKS_FILE_DESTINATION
 RUN apt-get update
 RUN apt-get install openjdk-17-jdk -y
 COPY . .
-COPY ${JKS_FILE_SOURCE} ${JKS_FILE_DESTINATION}
 
 RUN apt-get install maven -y
 RUN mvn clean install
