@@ -1,0 +1,28 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Configure SSH
+        uses: webfactory/ssh-agent@v0.8.0
+        with:
+          ssh-private-key: MIIEpQIBAAKCAQEA8ggoJB92PlRXRng7zmNXQdst9MESWE2neYbcTHWhe/Aa42HFEeAfRI8aUVHZLzHqeRM0F3RZwh8UJRHNbdMGfgUvsrIZzUK/hIPsSXgJf2McuE8S07bR3sK1ODYtyfJaRgl87ak1JVDSpoI+WzfdSQ7Gjc5d4FQ1s7ceslWKZzjq/6d8xLgQn7v56rRIHP8ldMiGeCwiRYzE9x0nxrkCr6RJpBL5gE8wvokm5pEJx0sSfgat4S56bqJN3/5QlPFOnivdj3j9rJq5yWgB+5L/3DiraShuZXWGOyl4FX24HFZHbOUMkI3LlLxvOxI5PXb3DuV+E5EYXiCNygkFRrGpAwIDAQABAoIBAQCjx5lCOHgPXYthiGMQGnElg2fpw+ziDEpUFkplAwSvlZ7cV4C/w+XkwuGQPc61/RUpsTEC3h0PG3DKVO2qb65pAKFyTsre91gaGBuA69WhejQpFHktAv2pvCBdVWxOx80Gr8z2FhZ8leC2BFSl7Xu0wGbj9s3Xy6Q7ZKNFElWB2tVoauuA/UEYXkFTbcvrkcdRFcfOClIaKr5UnoErX6IvQ4ZXU+wx/yV0G5iFOFVUEsrxDypO867G0U9RlM9lHdXMam99sb1OVk8qK9HXoCNYA48onzqbnBeo2tskq7di3zBuRFVG5xQSqinN5HjvuYyBp05qBopZ5tE5l8gu5t3BAoGBAPmRrcExjDe6x+Jp2rhI7ZqggeOQTDsAsOTIxArdld+/tJ471goS3I+FgdxUYrPDUmxGW7GFYAy/w0SbQqGK2xu+yV8C8hhV39Ovux17D2rm8NOP97w4amyElJJn4AcwHzlv4XJAZqI4sO3N3I8nlwv4BlZW/h/8mf4CyNike2kpAoGBAPhEwf5gBbakcYfTs8Rfo26YuF+BvBznjAEQpj8keWRhh5fbQoacRz8j6wZ/JlrubXHZli9r9Tuh5OOFxvgbxEIZXNZ5raWWKSsjDklc3+EEHF6ILSUCfuy0gxg/jVHkWXxrfu3+/TxgMDFrR65yxmEbg45vCDJPvVA1eh7JhEpLAoGBAK6YjR+AY2FFqbsrZRnR43Bu5A/pDnukwxx7nDMhzE1Jl7mvkNFhWq6Jr00OODMc7ZfULSfncEfbDGf92sKbGyiw874lmGsQANPeuCAqzKF0SX0o1h72tPWQV0SJqUA+GUocjHNavLK2yIjFoY0BHHoCHaTfnU+Rb8Y1+n8dqzzpAoGAFtutyM/qdsB5O3pAaOotT/d7sj9tpHOlLkvsIpAnJRjdtRuY6m/lF2klMHnwfBrLtNnFvCQCdjUXr+MXSKy1yygupgiZ9k73B2O44wRMEJmiSwnarjemnACauVbQmiOeIZh8HUmG41Iv3bz04pjqrvIrkKekZ41z7ridv8vqBDUCgYEAoj9IRj0MgpRe7ZUNcMt7s0T7LQ+0PAoUwiT1GmWLoAxtWQ2GxTHmlNurzakHricGEddKZdBwWinOwlQhZedayefQG45JJ8L/zg8fCkFS5b6fJh2Dc9LD+pgPmW0QZ2WlYcvEK9KDbxdH4vk9ng4bCqLJME8HTRgPlSJh0riKgzA=
+
+      - name: Deploy EC2
+        run: |
+          ssh -o StrictHostKeyChecking=no ubuntu@ec2-15-228-43-204.sa-east-1.compute.amazonaws.com << 'EOF'
+            cd /home/ubuntu/culinario-back
+            git pull origin main
+            docker compose down
+            docker compose up -d --build
+          EOF

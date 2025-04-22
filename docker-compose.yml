@@ -14,7 +14,7 @@ services:
       APP_PROFILE: ${APP_PROFILE}
       RDS_DBNAME: ${RDS_DBNAME}
       RDS_DBSCHEMA: ${RDS_DBSCHEMA}
-      RDS_ENDPOINT: db:5432
+      RDS_ENDPOINT: ${RDS_ENDPOINT}
       RDS_PASSWORD: ${RDS_PASSWORD}
       RDS_USERNAME: ${RDS_USERNAME}
       DDL_GENERATE: true
@@ -26,20 +26,3 @@ services:
       JKS_STOREPASS: ${JKS_STOREPASS}
       JKS_PATH: ${JKS_PATH}
       REDIRECT_URL: ${REDIRECT_URL}
-    depends_on:
-      - db
-
-  db:
-    image: postgres:latest
-    container_name: postgres_culinario
-    restart: always
-    environment:
-      POSTGRES_USER: ${RDS_USERNAME}
-      POSTGRES_PASSWORD: ${RDS_PASSWORD}
-    ports:
-      - "5432:5432"
-    volumes:
-      - db_data:/var/lib/postgresql/data
-
-volumes:
-  db_data:
